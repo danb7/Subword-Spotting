@@ -11,11 +11,11 @@ by: Daniel Bazar 314708181 & Lior Krengel 315850594
 ## our task
 we demonstrate a type of word puzzle that involves identifying embedded words within other words. Specifically, this puzzle asks to find a subword that is also the name of an object from some category (for example, colors, animals, etc.). while humans perform well on this task, LLM doesnt.
 example question:
-'''
+```
 which one of the following words contains a subword of an animal?
 a. guitar
 **b. million** (contains "lion")
 c. pasta
-'''
+```
 
 
