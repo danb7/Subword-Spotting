@@ -1,5 +1,5 @@
 import re
-from subword_prompt_templates.examples import multi_choice_examples
+from subword_prompt_templates.few_shot_examples import multi_choice_examples
 
 
 question = '''\
@@ -42,3 +42,7 @@ def generate_few_shot(category, choice1, choice2, choice3, choice4):
 ### actual question ###
 {generate_zero_shot(category, choice1, choice2, choice3, choice4)}
 A:'''
+
+
+def generate_CoT(category, word):
+    pass

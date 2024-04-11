@@ -1,5 +1,5 @@
 import re
-from subword_prompt_templates.examples import classification_examples
+from subword_prompt_templates.few_shot_examples import classification_examples
 
 
 question = '''\
@@ -35,3 +35,8 @@ def generate_few_shot(category, word):
 ### actual question ###
 {generate_zero_shot(category, word)}
 A:'''
+
+
+def generate_CoT(category, word):
+    pass
+ 
