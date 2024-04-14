@@ -16,5 +16,6 @@ which one of the following words contains a subword of an animal?
 a. guitar
 <b>b. million</b> (contains "lion")
 c. pasta
+d. house
 </pre>
 
