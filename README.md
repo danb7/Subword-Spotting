@@ -19,17 +19,15 @@ c. pasta
 d. house
 </pre>
 
-<span style="color:red;">
-  
-## Methodology of evaluation
-For testing LLMs for this task we conducted several experiments with various types of prompts on a dataset we created. 
-Some of the prompting techniques we used are zero-shot, few-shot, chain-of-thought, decomposition, etc. 
-For evaluation we compare the accuracy on different experiment with humans performance.
+```diff  
+- ## Methodology of evaluation
+- For testing LLMs for this task we conducted several experiments with various types of prompts on a dataset we created. 
+- Some of the prompting techniques we used are zero-shot, few-shot, chain-of-thought, decomposition, etc. 
+- For evaluation we compare the accuracy on different experiment with humans performance.
 
-## The Dataset
-format of the dataset, some examples, how we created it and so on........
+- ## The Dataset
+- format of the dataset, some examples, how we created it and so on........
 
-## Results
-Graphs and so on
-</span>
-
+- ## Results
+- Graphs and so on
+```
