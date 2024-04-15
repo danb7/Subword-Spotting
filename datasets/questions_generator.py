@@ -9,7 +9,6 @@ from openai import OpenAI
 import gensim.downloader as dl
 import os
 
-os.environ['TOGETHER_API_KEY'] = 'bf917c4afd545fdc63dbc3a62129880c51b441895bcbaf685dcf2792e77e9801'
 # Download brown corpus
 # nltk.download('brown')
 # nltk.download('wordnet')
