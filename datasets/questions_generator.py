@@ -25,7 +25,7 @@ def lemmatize_word(word, stop_words):
     return lemmatizer.lemmatize(word)
 
 def read_categories_files():
-    item_types = ['animal', 'body_part', 'car_brand', 'color', 'food', 'fruit', 'musical']
+    item_types = ['animal', 'body_part', 'vehicle_list', 'color', 'food', 'fruit', 'musical']
     types_dict = {}
     for item_type in item_types:
         with open(f'categories_word_list\\{item_type}_list.txt', 'r') as file:
