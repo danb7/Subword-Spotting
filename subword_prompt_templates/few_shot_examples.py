@@ -1,7 +1,9 @@
 positive_examples = {
     'animal': [('million', 'lion'), ('pants', 'ant'), ('beer', 'bee'), ('scatter', 'cat')],
 
-    'color': [('credit', 'red'), ('abluent', 'blue'), ('stingray', 'gray'), ('marigold', 'gold')]
+    'color': [('credit', 'red'), ('abluent', 'blue'), ('stingray', 'gray'), ('marigold', 'gold')],
+
+    'fruit': [('pearl', 'pear'), ('sublime', 'lime'), ('oliver', 'olive'), ('grape', 'grapevine')], #apple\grappled
 }
 
 negative_examples = {
