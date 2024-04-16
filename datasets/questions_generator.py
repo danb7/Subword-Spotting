@@ -14,7 +14,6 @@ from subword_prompt_templates import MultiChoicePrompts, ClassificationPrompts
 from openai import OpenAI
 import gensim.downloader as dl
 
-os.environ['TOGETHER_API_KEY'] = 'bf917c4afd545fdc63dbc3a62129880c51b441895bcbaf685dcf2792e77e9801'
 # Download brown corpus
 # nltk.download('brown')
 # nltk.download('wordnet')
@@ -30,7 +29,7 @@ def lemmatize_word(word, stop_words):
     return lemmatizer.lemmatize(word)
 
 def read_categories_files():
-    item_types = ['animal', 'body_part', 'car_brand', 'color', 'food', 'fruit', 'musical']
+    item_types = ['animal', 'body_part', 'vehicle_list', 'color', 'food', 'fruit', 'musical']
     types_dict = {}
     for item_type in item_types:
         with open(f'categories_word_list\\{item_type}_list.txt', 'r') as file:
