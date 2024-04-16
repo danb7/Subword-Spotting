@@ -4,10 +4,15 @@ from nltk.stem import WordNetLemmatizer
 import pandas as pd
 from collections import Counter
 import numpy as np 
+import sys
+import inspect
+import os
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
 from subword_prompt_templates import MultiChoicePrompts, ClassificationPrompts
 from openai import OpenAI
 import gensim.downloader as dl
-import os
 
 os.environ['TOGETHER_API_KEY'] = 'bf917c4afd545fdc63dbc3a62129880c51b441895bcbaf685dcf2792e77e9801'
 # Download brown corpus
@@ -59,9 +64,9 @@ corpus_word_freq_df = pd.DataFrame(corpus_word_freq.values(), corpus_word_freq.k
 #word2vec_model = dl.load("word2vec-google-news-300")
 #subwords_list_tuple = get_subwords_per_item(word2vec_model, read_categories_files(), corpus_base_word, corpus_word_freq)
 #selection_base_df = pd.DataFrame(subwords_list_tuple, columns=['Similarity', 'Category', 'Subword', 'Subword_freq', 'Word', 'Word_freq'])
-selection_base_df = pd.read_csv("dataset.csv")
-selection_base_df = selection_base_df[(selection_base_df['Similarity'] <= 0.3) & (selection_base_df['Word_freq'] >= 10)]
-grouped = selection_base_df.groupby('Category')
+selection_base_df = pd.read_csv("datasets\\dataset.csv")
+selection_filtered_df = selection_base_df[(selection_base_df['Similarity'] <= 0.3) & (selection_base_df['Word_freq'] >= 10)]
+grouped = selection_filtered_df.groupby('Category')
 random_questions = []
 for category, group in grouped:
     # Randomly select 10 "Subword" entries weighted by "Subword_freq"
@@ -72,11 +77,12 @@ for category, group in grouped:
                                         replace=False,
                                         p = categories_subwords_distinct['Subword_freq'] / categories_subwords_distinct['Subword_freq'].sum()
                                     )
+    my_categories = selection_filtered_df[selection_filtered_df['Category'] == category]
+    other_categories = corpus_word_freq_df[~corpus_word_freq_df.index.isin(selection_base_df[selection_base_df['Category'] == category]['Word'])]
+    other_categories = other_categories[~other_categories.index.isin(selection_base_df[selection_base_df['Category'] == category]['Subword'])]
     # Iterate over each selected "Subword"
     for subword in selected_subwords:
         #other_categories = selection_base_df[selection_base_df['Category'] != category]
-        my_categories = selection_base_df[selection_base_df['Category'] == category]
-        other_categories = corpus_word_freq_df[~corpus_word_freq_df.index.isin(my_categories['Word'])]
         category_words = my_categories[my_categories['Subword'].isin([subword])]
         other_categories_weights = other_categories['Word_freq'] / other_categories['Word_freq'].sum()
         catergory_words_weights = category_words['Word_freq'] / category_words['Word_freq'].sum()
@@ -95,6 +101,7 @@ client = OpenAI(
   base_url='https://api.together.xyz/v1',
 )
 cnt = 1
+response_list = []
 for question in random_questions:
     choices = list(question[3])
     choices.insert(cnt%2, question[2])
@@ -105,17 +112,18 @@ for question in random_questions:
                                                 choice2=choices[1],
                                                 choice3=choices[2],
                                                 choice4=choices[3])
-    print(f"The answer is: {question[2]}. Answer with the letter of the correct answer only, without explanations. {prompt}")
+    #print(f"The answer is: {question[2]}. Please provide a single-word answer from the following options. {prompt}")
     chat_completion = client.chat.completions.create(
     messages=[
         {
         "role": "user",
         #"content": f"Answer with \"Yes\" or \"No\" only, without explanations. {prompt}",
-        "content": f"Answer with the letter of the correct answer only, without explanations. {prompt}",
+        "content": f"{prompt}",
         }
     ],
-    model="GOOGLE/GEMMA-7B-IT",
+    model="META-LLAMA/LLAMA-2-7B-CHAT-HF",
     temperature = 0
     )
-    print(chat_completion.choices[0].message.content)
-    cnt += 1
+    response_list.append((prompt, chat_completion.choices[0].message.content))
+
+pd.DataFrame(response_list).to_csv("response_list_llama.csv")

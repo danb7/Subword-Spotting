@@ -18,6 +18,7 @@ Chimpanzee
 Crab
 Crocodile
 Crow
+Cow
 Deer
 Dinosaur
 Dog
