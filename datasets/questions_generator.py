@@ -52,43 +52,49 @@ def generate_random_questions(word2vec_model, evaluation_dataset_df, raw_dataset
     corpus_word_freq_df = corpus_word_freq_df.sort_values(by='Word_freq', ascending=False)
     p_most_freq = 1000
     for _, row in evaluation_dataset_df.iterrows():
-        for _, corpus_row in corpus_word_freq_df.iterrows():
-            if (word2_vec_vocab.get(row['Subword']) and word2_vec_vocab.get(corpus_row['Word'])):
-                corpus_word_freq_df['Subword_Similiarity'] = word2vec_model.similarity(row['Subword'], corpus_row['Word'])
-            else:
-                corpus_word_freq_df['Subword_Similiarity']
-
+        print(row['Word'])
         my_categories_subwords = raw_dataset_df[raw_dataset_df['Category'] == row['Category']]
         other_categories_words = corpus_word_freq_df[~corpus_word_freq_df.index.isin(my_categories_subwords['Word'])]
         other_categories_words = other_categories_words[~other_categories_words.index.isin(my_categories_subwords['Subword'])]
-        other_categories_words.loc[:,'Weights'] = other_categories_words['Word_freq'] / other_categories_words['Word_freq'].sum()
-        #Get only the P first most freq words and those with length greater than 3
-        other_categories_words = other_categories_words[:p_most_freq]
+        #Get only the P first most freq words and those with length greater than 5
         other_categories_words = other_categories_words[other_categories_words.index.str.len() >= 5]
-        selected_wrong_words = np.random.choice(other_categories_words[:p_most_freq].index, size=K, replace=False)
+        other_categories_words = other_categories_words[:p_most_freq]
+        for corpus_index, corpus_row in other_categories_words.iterrows():
+            if (word2_vec_vocab.get(row['Subword']) and word2_vec_vocab.get(corpus_row.name)):
+                other_categories_words.loc[corpus_index, 'Subword_Similiarity'] = abs(word2vec_model.similarity(row['Subword'], corpus_row.name))
+            else:
+                other_categories_words.loc[corpus_index, 'Subword_Similiarity'] = 0
+        
+        #Remove similiarty below 0.2
+        other_categories_words = other_categories_words[(other_categories_words['Subword_Similiarity'] >= 0.1) & (other_categories_words['Subword_Similiarity'] <= 0.6)]
+        other_categories_words.loc[:,'Weights'] = other_categories_words['Word_freq'] / other_categories_words['Word_freq'].sum()
+        
+        selected_wrong_words = np.random.choice(other_categories_words[:p_most_freq].index, size=K, replace=False, p=other_categories_words['Weights'])
+        #selected_wrong_words = np.random.choice(other_categories_words[:p_most_freq].index, size=K, replace=False)
         random_answers_per_word.append((row['Category'], row['Subword'], row['Word'], selected_wrong_words))
 
     return random_answers_per_word
 
-# Download brown corpus
-# nltk.download('brown')
-# nltk.download('wordnet')
-# nltk.download('stopwords')
-lemmatizer = WordNetLemmatizer()
-# Get all words from the Brown corpus
-stop_words = set(stopwords.words('english'))
-brown_words = brown.words()
-brown_words = list(lemmatize_word(word.lower(), stop_words) for word in brown_words if lemmatize_word(word.lower(), stop_words) is not None)
-# Lemmatize each word and keep only the base form
-base_words = set(brown_words)
-corpus_base_word = list(base_words)
-corpus_word_freq = Counter(brown_words)
-corpus_word_freq_df = pd.DataFrame(corpus_word_freq.values(), corpus_word_freq.keys(), columns=["Word_freq"])
-evaluation_dataset_df = pd.read_csv("datasets\\dataset_for_evaluation.csv")
-raw_dataset_df = pd.read_csv("datasets\\raw_dataset.csv")
-random_answers_per_word = generate_random_questions(word2vec_model, evaluation_dataset_df, raw_dataset_df, corpus_word_freq_df)
-random_answers_per_word_df = pd.DataFrame(random_answers_per_word, columns=["Category", "Subword", "Word", "Mulitple_Options"])
-random_answers_per_word_df.to_csv("datasets\\dataset_for_evaluation_multiple_options.csv")
+def generate_evaluation_set():
+    # Download brown corpus
+    # nltk.download('brown')
+    # nltk.download('wordnet')
+    # nltk.download('stopwords')
+    lemmatizer = WordNetLemmatizer()
+    # Get all words from the Brown corpus
+    stop_words = set(stopwords.words('english'))
+    brown_words = brown.words()
+    brown_words = list(lemmatize_word(word.lower(), stop_words) for word in brown_words if lemmatize_word(word.lower(), stop_words) is not None)
+    # Lemmatize each word and keep only the base form
+    base_words = set(brown_words)
+    corpus_base_word = list(base_words)
+    corpus_word_freq = Counter(brown_words)
+    corpus_word_freq_df = pd.DataFrame(corpus_word_freq.values(), corpus_word_freq.keys(), columns=["Word_freq"])
+    evaluation_dataset_df = pd.read_csv("datasets\\dataset_for_evaluation.csv")
+    raw_dataset_df = pd.read_csv("datasets\\raw_dataset.csv")
+    random_answers_per_word = generate_random_questions(word2vec_model, evaluation_dataset_df, raw_dataset_df, corpus_word_freq_df)
+    random_answers_per_word_df = pd.DataFrame(random_answers_per_word, columns=["Category", "Subword", "Word", "Mulitple_Options"])
+    random_answers_per_word_df.to_csv("datasets\\dataset_for_evaluation_multiple_options.csv")
 
 TOGETHER_API_KEY = os.environ.get("TOGETHER_API_KEY")
 client = OpenAI(
