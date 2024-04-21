@@ -17,7 +17,6 @@ groin
 hair
 hand
 head
-heart
 heel
 hip
 jaw

@@ -29,7 +29,6 @@ omelette
 pasta
 pie
 pizza
-plate
 rice
 sandwich
 seasoning
