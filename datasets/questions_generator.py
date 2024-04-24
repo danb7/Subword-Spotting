@@ -7,13 +7,14 @@ import numpy as np
 import sys
 import inspect
 import os
+import re
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from subword_prompt_templates import MultiChoicePrompts, ClassificationPrompts
 from openai import OpenAI
 import gensim.downloader as dl
-word2vec_model = dl.load("word2vec-google-news-300")
+#word2vec_model = dl.load("word2vec-google-news-300")
 
 # Function to lemmatize words
 def lemmatize_word(word, stop_words):
@@ -96,35 +97,95 @@ def generate_evaluation_set():
     random_answers_per_word_df = pd.DataFrame(random_answers_per_word, columns=["Category", "Subword", "Word", "Mulitple_Options"])
     random_answers_per_word_df.to_csv("datasets\\dataset_for_evaluation_multiple_options.csv")
 
+def create_Prompts():
+    multiChoicePrompts = MultiChoicePrompts.MultiChoicePrompts()
+    classificationPrompts = ClassificationPrompts.ClassificationPrompts()
+    multiple_choice_answers_dict = {
+        1: 'A',
+        2: 'B',
+        3: 'C',
+        4: 'D'
+    }
+    dataset_for_evaluation_df = pd.read_csv("datasets\\dataset_for_evaluation.csv")
+    cnt = 1
+    prompts_options = ['generate_zero_shot', 'generate_one_shot', 'generate_few_shot', 'generate_CoT', 'generate_decomposite']
+    for index, row in dataset_for_evaluation_df.iterrows():
+        mulitple_options_list = row['Mulitple_Options'].strip("[]").replace("'","").split(" ")
+        #Create choices for multiple choices
+        multiple_choices = mulitple_options_list
+        multiple_choices.insert(cnt%4, row['Word'])
+        #Create choice for classification
+        classification_choices = []
+        classification_choices.append(('Yes', row['Word']))
+        classification_choices.append(('No', np.random.choice(mulitple_options_list)))
+        prompts = []
+        for prompt_option in prompts_options:
+            #Get multiple choice prompts
+            multi_methods = getattr(multiChoicePrompts, prompt_option)
+            #Prompts contains:
+            # the prompt type, prompt options: few, one, zero shots/ cot, the letter or Yes/No of the correct answer, the correct word, prompt
+            prompts.append((prompts_Types["Multiple"], 
+                            prompt_option, 
+                            multiple_choice_answers_dict[cnt%4], 
+                            row['Word'], 
+                            multi_methods(category=row['Category'],
+                                choice1=multiple_choices[0],
+                                choice2=multiple_choices[1],
+                                choice3=multiple_choices[2],
+                                choice4=multiple_choices[3]
+                            )
+            ))
+            #Get classification choice prompts
+            for choice in classification_choices:
+                classification_methods = getattr(classificationPrompts, prompt_option)
+                prompts.append((prompts_Types["Classification"],
+                                prompt_option, choice[0], 
+                                row['Word'], 
+                                classification_methods(category=row['Category'],
+                                    word=choice[1]
+                                )
+                ))
+    
+    return prompts
+
+def response_Eval(prompt_type, choice_key, response):
+    if prompt_type == prompts_Types["Multiple"]:
+        match = re.search(r'([A-D])\.', response)
+    elif prompt_type == prompts_Types["Classification"]:
+        match = re.search(r'\b(?:Yes|No)\b', response)
+
+    if match:
+        return match.group(0).strip(".") == choice_key
+    else:
+        print("a")
+
+prompts_Types = {
+    "Multiple": "Multiple choice",
+    "Classification": "Classification prompt"
+}
+response_list = []
+prompts = create_Prompts()
 TOGETHER_API_KEY = os.environ.get("TOGETHER_API_KEY")
 client = OpenAI(
   api_key=TOGETHER_API_KEY,
   base_url='https://api.together.xyz/v1',
 )
-cnt = 1
-response_list = []
-for question in random_answers_per_word:
-    choices = list(question[3])
-    choices.insert(cnt%2, question[2])
-    # prompt = ClassificationPrompts.generate_zero_shot(category=question[0],
-    #                                         word=question[2])
-    prompt = MultiChoicePrompts.generate_zero_shot(category=question[0],
-                                                choice1=choices[0],
-                                                choice2=choices[1],
-                                                choice3=choices[2],
-                                                choice4=choices[3])
-    #print(f"The answer is: {question[2]}. Please provide a single-word answer from the following options. {prompt}")
+for prompt_type, prompt_structure, choice_key, word, prompt in prompts[:15]:
     chat_completion = client.chat.completions.create(
     messages=[
         {
         "role": "user",
-        #"content": f"Answer with \"Yes\" or \"No\" only, without explanations. {prompt}",
         "content": f"{prompt}",
         }
     ],
-    model="MISTRALAI/MIXTRAL-8X7B-INSTRUCT-V0.1",
-    temperature = 0
+    # model="MISTRALAI/MIXTRAL-8X7B-INSTRUCT-V0.1",
+    model = "MISTRALAI/MISTRAL-7B-INSTRUCT-V0.2",
+    temperature = 0,
+    max_tokens = 20
     )
-    response_list.append((prompt, chat_completion.choices[0].message.content))
+    response = chat_completion.choices[0].message.content
+    llm_response_eval = response_Eval(prompt_type, choice_key, response)
+    response_list.append((prompt_type, llm_response_eval, choice_key, word, prompt, response))
 
-pd.DataFrame(response_list).to_csv("response_list_llama.csv")
+
+pd.DataFrame(response_list).to_csv("response_list.csv")

@@ -14,7 +14,7 @@ positive_examples = {
 
 negative_examples = {
     'animal': ['book', 'printer', 'guitar', 'pasta', 'glass', 'house', 'camera', 'milk', 'envelope', 'shoes', 'clock', 'mirror', 'matrix', 'paper'],
-    'color': ['house', 'lamp', 'book', 'shoes', 'phone', 'guitar', 'truck', 'wallet', 'lantern', 'television', 'blanket'],
+    'color': ['house', 'lamp', 'book', 'shoes', 'phone', 'guitar', 'truck', 'wallet', 'lantern', 'television', 'blanket', 'picked', 'father', 'drink'],
     'fruit': ['book', 'printer', 'guitar', 'pasta', 'glass', 'house', 'camera', 'milk', 'envelope', 'shoes', 'clock', 'mirror', 'matrix', 'paper'],
     'food': ['book', 'printer', 'guitar', 'keys', 'glass', 'house', 'camera', 'puzzle', 'envelope', 'shoes', 'clock', 'mirror', 'matrix', 'paper'],
     'vehicle': ['book', 'printer', 'guitar', 'keys', 'glass', 'house', 'camera', 'puzzle', 'envelope', 'shoes', 'clock', 'mirror', 'matrix', 'paper'],

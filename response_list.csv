@@ -1,0 +1,258 @@
+,0,1,2,3,4,5
+0,Multiple choice,True,A,struck,"Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. industry
+    B. struck
+    C. block
+    D. never
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+","
+Answer: A.
+
+Explanation:
+The word ""industry"" contains"
+1,Classification prompt,False,Yes,struck,"Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","
+Answer: No. The word ""struck"" does not contain the word ""vehicle"
+2,Classification prompt,True,No,struck,"Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word industry contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","
+Answer: No.
+Industry and vehicle are two distinct words with different meanings"
+3,Multiple choice,False,A,struck,"    ### example question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. book
+    B. printer
+    C. training
+    D. guitar
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+training
+
+    ### actual question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. industry
+    B. struck
+    C. block
+    D. never
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+","C. car (The word ""industry"" does not contain a subword of a vehicle,"
+4,Classification prompt,False,Yes,struck,"    ### example question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word training contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Yes
+
+    ### actual question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","No. The word ""struck"" does not contain the word ""vehicle"" as a sub"
+5,Classification prompt,True,No,struck,"    ### example question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word training contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Yes
+
+    ### actual question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word industry contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","No. The word ""industry"" does not contain the word ""vehicle"" as a sub"
+6,Multiple choice,,A,struck,"### example question 1 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. training
+    B. book
+    C. printer
+    D. guitar
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+training
+
+### example question 2 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. keys
+    B. struck
+    C. glass
+    D. house
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+struck
+
+### example question 3 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. camera
+    B. puzzle
+    C. ambush
+    D. envelope
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+ambush
+
+### example question 4 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. shoes
+    B. clock
+    C. mirror
+    D. scary
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+scary
+
+### actual question ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. industry
+    B. struck
+    C. block
+    D. never
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+","[C]
+
+Explanation: The word ""block"" is a subword of the"
+7,Classification prompt,True,Yes,struck,"### example question 1 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word training contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Yes
+
+### example question 2 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word book contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+No
+
+### example question 3 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Yes
+
+### example question 4 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word printer contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+No
+
+### actual question ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","Yes. The word ""struck"" contains the subword ""struck,"" which is also a"
+8,Classification prompt,True,No,struck,"### example question 1 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word training contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Yes
+
+### example question 2 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word book contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+No
+
+### example question 3 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Yes
+
+### example question 4 ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word printer contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+No
+
+### actual question ###
+Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word industry contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+",No.
+9,Multiple choice,True,A,struck,"    ### example question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. book
+    B. printer
+    C. training
+    D. guitar
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+Since the word training contains the subword     train, which is a vehicle, the correct answer is training
+
+    ### actual question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. industry
+    B. struck
+    C. block
+    D. never
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+","
+Answer: A.
+
+Explanation: The word ""industry"" contains the"
+10,Classification prompt,False,Yes,struck,"    ### example question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word training contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Since the word training contains the subword     train, which is a vehicle, the correct answer is Yes
+
+    ### actual question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+",No. The word struck does not contain a subword that is a vehicle. The word struck comes
+11,Classification prompt,True,No,struck,"    ### example question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word training contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+Since the word training contains the subword     train, which is a vehicle, the correct answer is Yes
+
+    ### actual question ###
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word industry contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+",No. The word industry does not contain the subword vehicle as a standalone word. While the
+12,Multiple choice,,A,struck,"    Read the question below and understand what the question is asking for and the criteria for selecting the correct answer. 
+    Examine each word provided in the options carefully and Break down each word into its component parts or subwords.
+    Determine if any of the subwords within each word match the name of a vehicle. 
+    Choose the word that contains a subword of a vehicle according to the criteria given in the question.
+    Verify your answer, double-check your selection to ensure it meets all the requirements specified in the question.
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Which one of the following words contains a subword of a vehicle?
+    A. industry
+    B. struck
+    C. block
+    D. never
+Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
+","
+Answer: None of the above.
+
+Explanation:
+The word ""indust"
+13,Classification prompt,False,Yes,struck,"    Read the question below and understand what the question is asking for and the criteria for determine the correct answer. 
+    Examine the word provided in the question carefully and Break it down into its component parts or subwords.
+    Determine if any of the subwords within the word match the name of a vehicle. 
+    Answer with ""Yes"" or ""No"" only, without explanations.
+    Verify your answer, double-check your classification to ensure it meets all the requirements specified in the question.
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word struck contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","
+Answer: No.
+
+Explanation:
+The word ""struck"" is"
+14,Classification prompt,True,No,struck,"    Read the question below and understand what the question is asking for and the criteria for determine the correct answer. 
+    Examine the word provided in the question carefully and Break it down into its component parts or subwords.
+    Determine if any of the subwords within the word match the name of a vehicle. 
+    Answer with ""Yes"" or ""No"" only, without explanations.
+    Verify your answer, double-check your classification to ensure it meets all the requirements specified in the question.
+    Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
+Question: Does the word industry contains a subword of a vehicle?
+Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
+","
+Answer: No."
