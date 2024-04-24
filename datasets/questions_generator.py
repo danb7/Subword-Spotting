@@ -107,7 +107,8 @@ def create_Prompts():
         4: 'D'
     }
     dataset_for_evaluation_df = pd.read_csv("datasets\\dataset_for_evaluation.csv")
-    cnt = 1
+    cnt = 0
+    prompts = []
     prompts_options = ['generate_zero_shot', 'generate_one_shot', 'generate_few_shot', 'generate_CoT', 'generate_decomposite']
     for index, row in dataset_for_evaluation_df.iterrows():
         mulitple_options_list = row['Mulitple_Options'].strip("[]").replace("'","").split(" ")
@@ -118,7 +119,6 @@ def create_Prompts():
         classification_choices = []
         classification_choices.append(('Yes', row['Word']))
         classification_choices.append(('No', np.random.choice(mulitple_options_list)))
-        prompts = []
         for prompt_option in prompts_options:
             #Get multiple choice prompts
             multi_methods = getattr(multiChoicePrompts, prompt_option)
@@ -126,7 +126,7 @@ def create_Prompts():
             # the prompt type, prompt options: few, one, zero shots/ cot, the letter or Yes/No of the correct answer, the correct word, prompt
             prompts.append((prompts_Types["Multiple"], 
                             prompt_option, 
-                            multiple_choice_answers_dict[cnt%4], 
+                            multiple_choice_answers_dict[cnt%4 + 1], 
                             row['Word'], 
                             multi_methods(category=row['Category'],
                                 choice1=multiple_choices[0],
@@ -152,7 +152,7 @@ def create_Prompts():
 
 def response_Eval(prompt_type, choice_key, response):
     if prompt_type == prompts_Types["Multiple"]:
-        match = re.search(r'([A-D])\.', response)
+        match = re.search(r'(?:[A-D]\.|[A-D]\)|\[[A-D]\])', response)
     elif prompt_type == prompts_Types["Classification"]:
         match = re.search(r'\b(?:Yes|No)\b', response)
 
@@ -172,7 +172,7 @@ client = OpenAI(
   api_key=TOGETHER_API_KEY,
   base_url='https://api.together.xyz/v1',
 )
-for prompt_type, prompt_structure, choice_key, word, prompt in prompts[:15]:
+for prompt_type, prompt_structure, choice_key, word, prompt in prompts:
     chat_completion = client.chat.completions.create(
     messages=[
         {
@@ -187,7 +187,7 @@ for prompt_type, prompt_structure, choice_key, word, prompt in prompts[:15]:
     )
     response = chat_completion.choices[0].message.content
     llm_response_eval = response_Eval(prompt_type, choice_key, response)
-    response_list.append((prompt_type, llm_response_eval, choice_key, word, prompt, response))
+    response_list.append((prompt_type, prompt_structure, llm_response_eval, choice_key, word, prompt, response))
 
 
-pd.DataFrame(response_list).to_csv("response_list.csv")
+pd.DataFrame(response_list, columns=["Prompt Type", "Structure", "Evaluation", "Correct Answer", "Word", "Prompt", "Response"]).to_csv("response_list.csv")
