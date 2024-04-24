@@ -145,6 +145,8 @@ def create_Prompts():
                                     word=choice[1]
                                 )
                 ))
+                
+        cnt += 1
     
     return prompts
 
