@@ -4,9 +4,9 @@ from subword_prompt_templates import few_shot_examples
 class ClassificationPrompts():
     question = '''\
 Subword is a standalone word that exists within a longer word that contains it, and its meaning is arbitrary from the longer word one's.
-Question: Does the word {word} contains a subword of a {category}?
+Question: Does the word "{word}" contains a subword of a {category}?
 Answer: [Your answer here, just Yes/ No, without any explanation or additional text].
-'''
+''' # TODO: change []
 
     example = question + '{answer}'
 
@@ -64,7 +64,7 @@ Answer: [Your answer here, just Yes/ No, without any explanation or additional t
         positive_answer = '''Since the word {example_word} contains the subword \
     {example_subword}, which is a {category}, the correct answer is Yes'''
         negative_answer = '''Since the word {example_word} doesnt contains any subword \
-    of a {category}, the correct answer is No'''
+    of a {category}, the correct answer is No''' #TODO: change this also.
 
         if shot == 'one':
             cot_question = self.generate_one_shot(category, word, positive_answer)
@@ -77,11 +77,11 @@ Answer: [Your answer here, just Yes/ No, without any explanation or additional t
 
     def generate_decomposite(self, category, word):
         decomposite_question = f'''\
-    Read the question below and understand what the question is asking for and the criteria for determine the correct answer. 
-    Examine the word provided in the question carefully and Break it down into its component parts or subwords.
-    Determine if any of the subwords within the word match the name of a {category}. 
-    Answer with "Yes" or "No" only, without explanations.
-    Verify your answer, double-check your classification to ensure it meets all the requirements specified in the question.
-    {self.generate_zero_shot(category, word)}'''
+Read the question below and understand what the question is asking for and the criteria for determine the correct answer. 
+Examine the word provided in the question carefully and Break it down into its component parts or subwords.
+Determine if any of the subwords within the word match the name of a {category}. 
+Answer with "Yes" or "No" only, without explanations.
+Verify your answer, double-check your classification to ensure it meets all the requirements specified in the question.
+{self.generate_zero_shot(category, word)}'''
         
         return helpers.fix_a_an(decomposite_question)

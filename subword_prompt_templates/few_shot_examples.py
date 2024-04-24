@@ -1,4 +1,4 @@
-positive_examples = {
+positive_examples = { # TODO: change to examples for words that didnt in the dataset
     'animal': [('million', 'lion'), ('pants', 'ant'), ('beer', 'bee'), ('scatter', 'cat')],
 
     'color': [('credit', 'red'), ('abluent', 'blue'), ('stingray', 'gray'), ('marigold', 'gold')],

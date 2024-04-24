@@ -111,7 +111,7 @@ def create_Prompts():
     prompts = []
     prompts_options = ['generate_zero_shot', 'generate_one_shot', 'generate_few_shot', 'generate_CoT', 'generate_decomposite']
     for index, row in dataset_for_evaluation_df.iterrows():
-        mulitple_options_list = row['Mulitple_Options'].strip("[]").replace("'","").split(" ")
+        mulitple_options_list = row['Mulitple_Options'].strip("[]").replace("'","").split(" ") # json
         #Create choices for multiple choices
         multiple_choices = mulitple_options_list
         multiple_choices.insert(cnt%4, row['Word'])
@@ -152,12 +152,12 @@ def create_Prompts():
 
 def response_Eval(prompt_type, choice_key, response):
     if prompt_type == prompts_Types["Multiple"]:
-        match = re.search(r'(?:[A-D]\.|[A-D]\)|\[[A-D]\])', response)
+        match = re.search(r'(?:[A-D]\.|[A-D]\)|\[[A-D]\])', response) # TODO: generalize to all caps ABCD
     elif prompt_type == prompts_Types["Classification"]:
         match = re.search(r'\b(?:Yes|No)\b', response)
 
     if match:
-        return match.group(0).strip(".") == choice_key
+        return match.group(0).strip(".") == choice_key # TODO: genralize this also
     else:
         print("a")
 

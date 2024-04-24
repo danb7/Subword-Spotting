@@ -10,7 +10,7 @@ Question: Which one of the following words contains a subword of a {category}?
     C. {choice3}
     D. {choice4}
 Answer: [Your answer here, just the correspond letter, without any explanation or additional text].
-'''
+''' # TODO: change the [] part only on actuals questions
 
     example = question + '{answer}'
 
@@ -26,7 +26,7 @@ Answer: [Your answer here, just the correspond letter, without any explanation o
     def generate_one_shot(self, category, choice1, choice2, choice3, choice4, answer=''):
         correct_word = few_shot_examples.positive_examples[category][0][0]
         correspond_subword = few_shot_examples.positive_examples[category][0][1]
-        correct_position = 3
+        correct_position = 3 #TODO: change this to random
         choices =  few_shot_examples.negative_examples[category][:3]
         choices.insert(correct_position-1, correct_word)
         if answer:
@@ -77,7 +77,7 @@ Answer: [Your answer here, just the correspond letter, without any explanation o
 
     def generate_CoT(self, category, choice1, choice2, choice3, choice4, shot='one'):
         cot_answer = '''Since the word {correct_word} contains the subword \
-    {correct_subword}, which is a {category}, the correct answer is {correct_word}'''
+    {correct_subword}, which is a {category}, the correct answer is {correct_word}''' # TODO: change to (for example): A. [explanation]
         if shot == 'one':
             cot_question = self.generate_one_shot(category, choice1, choice2, choice3, choice4, cot_answer)
         elif shot == 'few':
@@ -90,11 +90,11 @@ Answer: [Your answer here, just the correspond letter, without any explanation o
 
     def generate_decomposite(self, category, choice1, choice2, choice3, choice4):
         decomposite_question = f'''\
-    Read the question below and understand what the question is asking for and the criteria for selecting the correct answer. 
-    Examine each word provided in the options carefully and Break down each word into its component parts or subwords.
-    Determine if any of the subwords within each word match the name of a {category}. 
-    Choose the word that contains a subword of a {category} according to the criteria given in the question.
-    Verify your answer, double-check your selection to ensure it meets all the requirements specified in the question.
-    {self.generate_zero_shot(category, choice1, choice2, choice3, choice4)}'''
+Read the question below and understand what the question is asking for and the criteria for selecting the correct answer. 
+Examine each word provided in the options carefully and Break down each word into its component parts or subwords.
+Determine if any of the subwords within each word match the name of a {category}. 
+Choose the word that contains a subword of a {category} according to the criteria given in the question.
+Verify your answer, double-check your selection to ensure it meets all the requirements specified in the question.
+{self.generate_zero_shot(category, choice1, choice2, choice3, choice4)}'''
         
         return helpers.fix_a_an(decomposite_question)
