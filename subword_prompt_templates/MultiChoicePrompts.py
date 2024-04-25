@@ -11,7 +11,7 @@ Question: Which one of the following words contains a subword of a {category}?
     C. {choice3}
     D. {choice4}
 Answer: ''',
-answer_aid='''[Your answer here, just the correspond letter, without any explanation or additional text]'''):
+answer_aid='''[Your answer here, just the correspond letter and the word, without any explanation or additional text]'''):
         self.question = question
         self.example = self.question + '{answer}'
         self.answer_aid = answer_aid
