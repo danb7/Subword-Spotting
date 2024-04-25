@@ -43,11 +43,12 @@ def evaluate_response(prompt_type, response, gold):
         return False
     
 
-def plot_results(pv): # TODO: plot the humen and random lines correct
+def plot_results(pv, radnom_line): # TODO: plot the humen line correct (get value directly from the code)
     ax = pv.T.plot(kind='bar')
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x*100:.0f}%'))
     ax.set_ylabel('Accuracy', fontsize=12)
     ax.axhline(y=0.97, color='navy', label='humen')#human benchmark
-    ax.axhline(y=0.5, color='gray', linestyle='--', label='random')#random
+    if radnom_line:
+        ax.axhline(y=radnom_line, color='gray', linestyle='--', label='random')#random
     ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
     plt.show()
