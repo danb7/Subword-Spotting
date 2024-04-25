@@ -1,15 +1,15 @@
-positive_examples = { # TODO: change to examples for words that didnt in the dataset
-    'animal': [('million', 'lion'), ('pants', 'ant'), ('beer', 'bee'), ('scatter', 'cat')],
+positive_examples = { # TODO: change to examples for words that didnt in the dataset (still partial)
+    'animal': [('million', 'lion'), ('pants', 'ant'), ('health', 'eal'), ('sealed', 'seal')],
 
-    'color': [('credit', 'red'), ('abluent', 'blue'), ('stingray', 'gray'), ('marigold', 'gold')],
+    'color': [('credit', 'red'), ('blueprint', 'blue'), ('stingray', 'gray'), ('marigold', 'gold')],
 
-    'fruit': [('pearl', 'pear'), ('sublime', 'lime'), ('oliver', 'olive'), ('grape', 'grapevine')], #apple\grappled
+    'fruit': [('pearl', 'pear'), ('sublime', 'lime'), ('oliver', 'olive'), ('grape', 'grapevine')],
 
-    'food': [('piece', 'pie'), ('price', 'rice'), ('butterfly', 'butter'), ('breadth', 'bread')],# cream\scream
+    'food': [('piece', 'pie'), ('maurice', 'rice'), ('started', 'tart'), ('moreover', 'oreo')],
 
-    'vehicle': [('training', 'train'), ('struck', 'truck'), ('ambush', 'bus'), ('scary', 'car')],#Boathouse
+    'vehicle': [('training', 'train'), ('boatswain', 'boat'), ('business', 'bus'), ('carried', 'car')],
 
-    'body_part': [('clip', 'lip'), ('diagnose', 'nose'), ('deliver', 'liver'), ('interface', 'face')],
+    'body_part': [('fingerprint', 'finger'), ('organization', 'organ'), ('footage', 'foot'), ('interface', 'face')],
 }
 
 negative_examples = {
