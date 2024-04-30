@@ -14,7 +14,7 @@ answer_aid='''[Your answer here, just Yes/No, without any explanation or additio
     
     def generate(self, technique, category, word, **kwargs):
         if technique=='zero_shot':
-            prompts = self._generate_zero_shot(category, word, **kwargs)
+            prompts = self._generate_zero_shot(category, word, direct=True, **kwargs)
         
         elif technique=='one_shot':
             prompts = self._generate_one_shot(category, word, **kwargs)
@@ -33,9 +33,13 @@ answer_aid='''[Your answer here, just Yes/No, without any explanation or additio
         
         return prompts
 
-    def _generate_zero_shot(self, category, word, ans_aid=True):
+    def _generate_zero_shot(self, category, word, ans_aid=True, direct=False):
         formated_question = self.question.format(category=category,
                                                  word=word)
+        if direct:
+            direct_instruct = 'In your response, first Answer with "Yes" or "No". In case of doubt, answer according to the most probable answer.'
+            last_index = formated_question.rfind('Answer')
+            formated_question = formated_question[:last_index] + direct_instruct + '\n' + formated_question[last_index:]
         if ans_aid:
             formated_question += self.answer_aid
         return helpers.fix_a_an(formated_question) # replace "a" to "an" if category start with vowels
@@ -104,7 +108,7 @@ of a {category}, the correct answer is No.'''
 Read the question below and understand what the question is asking for and the criteria for determine the correct answer. 
 Examine the word provided in the question carefully and Break it down into its component parts or subwords.
 Determine if any of the subwords within the word match the name of a {category}. 
-Answer with "Yes" or "No" only, without explanations.
+Answer with "Yes" or "No" only, without explanations. In case of doubt, answer according to the most probable answer.
 Verify your answer, double-check your classification to ensure it meets all the requirements specified in the question.
 {self._generate_zero_shot(category, word)}'''
         

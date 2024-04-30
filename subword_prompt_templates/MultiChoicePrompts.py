@@ -19,7 +19,7 @@ answer_aid='''[Your answer here, just the correspond letter and the word, withou
 
     def generate(self, technique, category, choice1, choice2, choice3, choice4, **kwargs):
         if technique=='zero_shot':
-            prompts = self._generate_zero_shot(category, choice1, choice2, choice3, choice4, **kwargs)
+            prompts = self._generate_zero_shot(category, choice1, choice2, choice3, choice4, direct=True, **kwargs)
         
         elif technique=='one_shot':
             prompts = self._generate_one_shot(category, choice1, choice2, choice3, choice4, **kwargs)
@@ -39,12 +39,16 @@ answer_aid='''[Your answer here, just the correspond letter and the word, withou
         return prompts
         
 
-    def _generate_zero_shot(self, category, choice1, choice2, choice3, choice4, ans_aid=True):
+    def _generate_zero_shot(self, category, choice1, choice2, choice3, choice4, ans_aid=True, direct=False):
         formated_question = self.question.format(category=category,
                                                  choice1=choice1, 
                                                  choice2=choice2, 
                                                  choice3=choice3, 
                                                  choice4=choice4)
+        if direct:
+            direct_instruct = 'Start your response with the correct letter and the correspond word. In case of doubt, answer according to the most probable answer.'
+            last_index = formated_question.rfind('Answer')
+            formated_question = formated_question[:last_index] + direct_instruct + '\n' + formated_question[last_index:]
         if ans_aid:
             formated_question += self.answer_aid
         return helpers.fix_a_an(formated_question) # replace "a" to "an" if category start with vowels
@@ -124,6 +128,7 @@ Examine each word provided in the options carefully and Break down each word int
 Determine if any of the subwords within each word match the name of a {category}. 
 Choose the word that contains a subword of a {category} according to the criteria given in the question.
 Verify your answer, double-check your selection to ensure it meets all the requirements specified in the question.
+Start your response with the correct letter and the correspond word. In case of doubt, answer according to the most probable answer.
 {self._generate_zero_shot(category, choice1, choice2, choice3, choice4)}'''
         
         return helpers.fix_a_an(decomposite_question)
