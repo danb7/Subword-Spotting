@@ -3,6 +3,7 @@ import re
 from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
+from human_benchmark import human_benchmark
 
 def fix_a_an(sentence):
     '''replace "a" to "an" if needed'''
@@ -44,11 +45,13 @@ def evaluate_response(response, gold):
         return False
 
 
-def plot_results(pv, radnom_line): # TODO: plot the human line correct (get value directly from the code)
+def plot_results(pv, type, radnom_line=None): # TODO: plot the human line correct (get value directly from the code)
+    '''type: multi or classification'''
     ax = pv.T.plot(kind='bar')
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x*100:.0f}%'))
     ax.set_ylabel('Accuracy', fontsize=12)
-    ax.axhline(y=0.97, color='navy', label='human') # human benchmark
+    humans_result = human_benchmark.get_human_benchmark(type)['mean_score']
+    ax.axhline(y=humans_result, color='navy', label='human') # human benchmark
     if radnom_line:
         ax.axhline(y=radnom_line, color='gray', linestyle='--', label='random')#random
     ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
