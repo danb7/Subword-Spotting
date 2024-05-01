@@ -10,7 +10,7 @@ def fix_a_an(sentence):
     return re.sub(r'\ba(?=\s+[aeiou])', 'an', sentence)
 
 
-def generate_llm_response(client, prompt, model, temperature=0, max_tokens=256):
+def generate_llm_response(client, prompt, model, temperature=0, max_tokens=128):
     chat_completion = client.chat.completions.create(
         messages=[
             {
