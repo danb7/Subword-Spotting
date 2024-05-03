@@ -45,7 +45,7 @@ def evaluate_response(response, gold):
         return False
 
 
-def plot_results(pv, type, radnom_line=None): # TODO: plot the human line correct (get value directly from the code)
+def plot_results(pv, type, radnom_line=None):
     '''type: multi or classification'''
     ax = pv.T.plot(kind='bar')
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x*100:.0f}%'))
