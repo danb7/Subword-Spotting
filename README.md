@@ -22,7 +22,7 @@ d. house
 ## Methodology of evaluation
 ### Dataset
 We designed a dataset of subwords for different categories. here are few examples:
-|  Category | Subword |    Word   |           Mulitple_Options          |
+|  Category | Subword |    Word   |           Mulitple Wrong Options          |
 |:---------:|:-------:|:---------:|:-----------------------------------:|
 |  vehicle  |   car   |  scarcely |    ['asked' 'service' 'thinking']   |
 |   animal  |   rat   | operation |     ['dinner' 'finding' 'water']    |
