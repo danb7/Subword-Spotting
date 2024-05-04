@@ -66,4 +66,4 @@ The average accuracy of humans is **97.2%** in multiple-choice questions and **9
 |                 | Human   |   96.8%   |          |          |         |         |             |
 
 ![multi_plot](https://github.com/danb7/Subword-Spotting/tree/8d5c758bb367b1fde43ce9eefc860cc41b345f4b/images/multi_plot.png)
-![classification_plot](https://github.com/danb7/Subword-Spotting/tree/8d5c758bb367b1fde43ce9eefc860cc41b345f4b/images/YesNO_plot.png)
+![classification_plot](images/YesNo_plot.png)
