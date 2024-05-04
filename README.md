@@ -49,7 +49,7 @@ and different LLMs (Mixtral-8x7B, OLMo 7B, and Llama 3 8B).
 
 ### Human benchmark
 To create the human benchmark, we created 18 forms using Google Forms. See all forms in the `human_benchmark` folder.
-The average accuracy of humans is 97.2% in multiple-choice questions and 96.8% in Yes/No questions. 
+The average accuracy of humans is **97.2%** in multiple-choice questions and **96.8%** in Yes/No questions. 
 
 ## Results
 |                 |         | Zero-shot | One-shot | Few-shot | CoT-one | CoT-few | Decomposite |
