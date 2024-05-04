@@ -45,11 +45,21 @@ def evaluate_response(response, gold):
         return False
 
 
+def fix_xlabel(xlabel):
+    xlabel = xlabel.replace('_', '-')
+    xlabel = xlabel.replace('decomposite', 'decomposed')
+    xlabel = xlabel[0].upper() + xlabel[1:]
+
+    return xlabel
+
+
 def plot_results(pv, type, radnom_line=None):
     '''type: multi or classification'''
     ax = pv.T.plot(kind='bar')
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x*100:.0f}%'))
     ax.set_ylabel('Accuracy', fontsize=12)
+    new_xlabels = [fix_xlabel(text.get_text()) for text in ax.get_xticklabels()]
+    ax.set_xticklabels(new_xlabels)
     humans_result = human_benchmark.get_human_benchmark(type)['mean_score']
     ax.axhline(y=humans_result, color='navy', label='human') # human benchmark
     if radnom_line:
